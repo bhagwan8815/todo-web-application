@@ -14,15 +14,14 @@ const PORT = process.env.PORT || 5000
 app.use(express.json());
 app.use(cors());
 
-//routes
-
+//import routes and mount api
+const testRoute = require('./routes/testRouter');
+app.use('/api/v1',testRoute );
 
 //listen or start the applicaiton here
 app.listen(PORT,(req, res)=>{
     console.log(`app is running on port ${PORT}`.bgMagenta)
 })
-//create a dummy route 
-app.get('/dummy',(req, res)=>{
-   res.send("this is the dummy routes for checking .")
-})
+
+
 

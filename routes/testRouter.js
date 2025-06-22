@@ -6,7 +6,7 @@ const { testController } = require('../controllers/testController');
 
 
 //define api Routes
-router.get('/test', testController)
+router.get('/', testController)
 
 
 

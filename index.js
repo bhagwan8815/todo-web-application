@@ -16,7 +16,12 @@ app.use(cors());
 
 //import routes and mount api
 const testRoute = require('./routes/testRouter');
-app.use('/api/v1',testRoute );
+app.use('/api/v1/test',testRoute );
+
+const userRoute = require('./routes/userRouter');
+app.use('/api/v1/user', userRoute);
+
+
 
 //listen or start the applicaiton here
 app.listen(PORT,(req, res)=>{

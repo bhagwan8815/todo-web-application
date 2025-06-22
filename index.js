@@ -23,5 +23,9 @@ app.listen(PORT,(req, res)=>{
     console.log(`app is running on port ${PORT}`.bgMagenta)
 })
 
+//database connected call
+const dbConnect= require('./config/database')
+dbConnect();
+
 
 

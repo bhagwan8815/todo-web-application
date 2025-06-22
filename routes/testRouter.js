@@ -5,9 +5,9 @@ const router = express.Router();
 const { testController } = require('../controllers/testController');
 
 
-
 //define api Routes
 router.get('/test', testController)
+
 
 
 //exports

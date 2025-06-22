@@ -3,4 +3,4 @@ const testController = (req, res)=>{
 
 }
 
-module.exports = {testController};
+module.exports = { testController };

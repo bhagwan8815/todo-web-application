@@ -1,5 +1,7 @@
 const userModel = require("../models/userModel");
 
+
+
 const registerController = async (req, res)=>{
 
     try{
@@ -47,4 +49,51 @@ const registerController = async (req, res)=>{
     }
 }
 
-module.exports =  registerController;
+
+//login controller for login
+const loginController =  async(req, res) =>{
+    try{
+      //fetch email and password from the req body
+      const {email , password} = req.body;
+
+      //validation
+      if(!email || !password){
+        return res.status(500).send(
+            {
+                success:false,
+                message:"all fields are required."
+            }
+        )
+      }
+
+      //check user is registed or not 
+      const exitUser =  await userModel.findOne({email});
+      //
+      if(exitUser){
+        //compare the password
+        const exitUserPassword = exitUser.password;
+        if(exitUserPassword===password){
+            return res.status(200).send({
+                success:true,
+                message:"user logged in successfully",
+                exitUser
+            })
+        }
+
+      }
+
+      return res.status(500).send({
+        success:false,
+        message:"user is not registred with this email."
+      })
+    }catch(error){
+     console.log(error);
+     return res.status(500).send({
+        success:false,
+        message:"issue in login"
+     })
+    }
+
+}
+
+module.exports = { registerController, loginController };

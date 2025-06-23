@@ -1,12 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  return (
-    <div >
-  
+ 
+  return(
+    <div>
+      <h1 className="text-3xl text-red-400">welcome to the react app with tailwind styles</h1>
     </div>
-  );
+  )
 }
 
 export default App;

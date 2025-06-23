@@ -1,4 +1,5 @@
 const userModel = require("../models/userModel");
+const bcrypt = require('bcrypt');
 
 
 
@@ -28,8 +29,12 @@ const registerController = async (req, res)=>{
             )
         }
 
+        //hashed password 
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password,salt);
+
         //create an new user 
-        const newUser = new userModel({username , email , password});
+        const newUser = new userModel({username , email , password:hashedPassword});
         //save newUser in mongodb with the help of save method of mongodb
         await newUser.save();
 
@@ -71,15 +76,21 @@ const loginController =  async(req, res) =>{
       //
       if(exitUser){
         //compare the password
-        const exitUserPassword = exitUser.password;
-        if(exitUserPassword===password){
+         const exitUserPassword = exitUser.password;
+        const isMatch = bcrypt.compare(password , exitUserPassword)
+        if(isMatch){
             return res.status(200).send({
                 success:true,
                 message:"user logged in successfully",
                 exitUser
             })
-        }
+        }else{
+            return res.status(500).send({
+                success:false,
+                message:"password not matched",
 
+            })
+        }
       }
 
       return res.status(500).send({

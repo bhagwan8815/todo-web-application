@@ -11,7 +11,7 @@ import About from './pages/About/About'
 function App() {
  
   return(
-    <div>
+    <div className="max-w[1200px]">
       <Routes>
      
         <Route path='/' element={<Landing/>}/>

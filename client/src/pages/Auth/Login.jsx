@@ -19,8 +19,6 @@ export default function Login() {
           ...prevData,
           [name]:value
         }))
-
-
     }
 
 

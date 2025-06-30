@@ -1,0 +1,5 @@
+for connectiong frontend to backend
+1. go to client /package.json file and add pxocy:"http://localhost:4000/api/v1"
+2. for network request we use axios , so we will install it in client-- npm i axios
+3. make a separate folder services , inside this make a file AuthServices.js 
+4. now see the code in AuthServices.js file 

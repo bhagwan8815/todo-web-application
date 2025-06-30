@@ -57,70 +57,62 @@ const registerController = async (req, res)=>{
 
 
 //login controller for login
-const loginController =  async(req, res) =>{
-    try{
-      //fetch email and password from the req body
-      const {email , password} = req.body;
+const loginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-      //validation
-      if(!email || !password){
-        return res.status(500).send(
-            {
-                success:false,
-                message:"all fields are required."
-            }
-        )
-      }
-
-      //check user is registed or not 
-      const exitUser =  await userModel.findOne({email});
-      
-      //
-      if(exitUser){
-   
-        //compare the password
-         const exitUserPassword = exitUser.password;
-        const isMatch = await bcrypt.compare(password , exitUserPassword)
-       
-        if(isMatch){
-           
-             //generate the token here
-             const token = await JWT.sign({id:exitUser._id}, process.env.JWT_SECRET,{
-                expiresIn:"1d"
-             })
-            return res.status(200).send({
-                success:true,
-                message:"user logged in successfully",
-                token,
-                exitUser:{
-                    id: exitUser._id,
-                    user:exitUser.username,
-                    email:exitUser.email
-                }
-            })
-           
-
-        }else{
-            return res.status(500).send({
-                success:false,
-                message:"password not matched",
-
-            })
-        }
-      }
-
-      return res.status(500).send({
-        success:false,
-        message:"user is not registred with this email."
-      })
-    }catch(error){
-     console.log(error);
-     return res.status(500).send({
-        success:false,
-        message:"issue in login"
-     })
+    // 1. Validation
+    if (!email || !password) {
+      return res.status(400).send({
+        success: false,
+        message: "All fields are required.",
+      });
     }
 
-}
+    // 2. Check user
+    const existingUser = await userModel.findOne({ email });
+    if (!existingUser) {
+      return res.status(404).send({
+        success: false,
+        message: "User is not registered with this email.",
+      });
+    }
+
+    // 3. Compare password
+    const isMatch = await bcrypt.compare(password, existingUser.password);
+    if (!isMatch) {
+      return res.status(401).send({
+        success: false,
+        message: "Incorrect password.",
+      });
+    }
+
+    // 4. Generate token
+    const token = JWT.sign({ id: existingUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    // 5. Success
+    return res.status(200).send({
+      success: true,
+      message: "User logged in successfully",
+      token,
+      user: {
+        id: existingUser._id,
+        username: existingUser.username,
+        email: existingUser.email,
+      },
+    });
+
+  } catch (error) {
+    console.error("Login error:", error.message);
+    return res.status(500).send({
+      success: false,
+      message: "Issue in login",
+      error: error.message,
+    });
+  }
+};
+
 
 module.exports = { registerController, loginController };

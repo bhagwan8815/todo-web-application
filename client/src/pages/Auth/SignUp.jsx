@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AuthServices from "../../Services/AuthServices";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -17,11 +18,24 @@ export default function SignUp() {
 
   }
 
-  const signupHandler = (e) => {
-      e.preventDefault();
-    alert(`login data is  ${formData.email}   ${formData.username}`)
-    console.log("form data", formData)
+  const signupHandler = async (e) => {
+     try{
+      e.preventDefault()
+      const data = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password
+      }
+      console.log("data is ", data);
+      const res = await AuthServices.registerUser(data)
+      console.log(res)
+     }catch(err){
+      console.log(err)
+
+     }
   };
+
+
   return (
     <div>
       <form action="">

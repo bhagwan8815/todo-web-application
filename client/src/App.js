@@ -6,6 +6,7 @@ import Login from './pages/Auth/Login';
 import SignUp from './pages/Auth/SignUp';
 import Todos from "./pages/Todos/Todos";
 import About from './pages/About/About'
+import  { Toaster } from 'react-hot-toast';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
 
 
       </Routes>
+       <Toaster />
     </div>
   )
 }

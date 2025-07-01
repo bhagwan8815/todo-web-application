@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import AuthServices from "../../Services/AuthServices";
+import toast from "react-hot-toast";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -7,7 +9,7 @@ export default function SignUp() {
     email: "",
     password: "",
   });
-
+const Navigate = useNavigate();
   const changeHandler=(e)=>{
     const {name, value}= e.target;
 
@@ -28,9 +30,12 @@ export default function SignUp() {
       }
       console.log("data is ", data);
       const res = await AuthServices.registerUser(data)
+      toast.success("Registration Successful.")
+      Navigate("/login")
       console.log(res)
      }catch(err){
       console.log(err)
+      toast.error("Issue in Registraion.")
 
      }
   };

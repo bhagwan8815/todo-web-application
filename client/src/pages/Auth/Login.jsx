@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link , Navigate, useNavigate} from "react-router-dom";
 import { useState } from "react";
 import AuthServices from "../../Services/AuthServices";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ export default function Login() {
     password: "",
   });
 
+  const Navigate = useNavigate();
   const changeHandler = (e) => {
     const { name, value } = e.target;
 
@@ -27,9 +29,11 @@ export default function Login() {
       };
       console.log("data is :" , data)
       const res = await AuthServices.loginUser(data);
-      console.log(res);
+      toast.success("Successfully Login")
+      Navigate("/")
     } catch (err) {
       console.log(err);
+      toast.error("Issue in Login")
     }
   };
   return (

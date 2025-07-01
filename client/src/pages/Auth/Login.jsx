@@ -3,6 +3,7 @@ import { Link , Navigate, useNavigate} from "react-router-dom";
 import { useState } from "react";
 import AuthServices from "../../Services/AuthServices";
 import toast from "react-hot-toast";
+import { getErrorMessage } from "../../utilis/ErrorMessage";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -27,13 +28,12 @@ export default function Login() {
         email: formData.email,
         password: formData.password,
       };
-      console.log("data is :" , data)
       const res = await AuthServices.loginUser(data);
       toast.success("Successfully Login")
+      localStorage.setItem("todoappuser",JSON.stringify(res.data))
       Navigate("/")
     } catch (err) {
-      console.log(err);
-      toast.error("Issue in Login")
+       toast.error(getErrorMessage(err))
     }
   };
   return (

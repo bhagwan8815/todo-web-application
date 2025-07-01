@@ -5,14 +5,14 @@ for connectiong frontend to backend
 4. now see the code in AuthServices.js file 
 
 
-
-
-
-
-
-
-
-
-
 the second way to connect frontend to backend is 
 using redux 
+
+
+
+***************
+for run frontend and backend to only one commnad we use ---- concurrently package 
+for this we have to install it ------- npm i concurrently
+then make the both script in package.json file of backend---
+then make a concurrently commnad by combine both the above commnad.
+see code in package.json file of backend

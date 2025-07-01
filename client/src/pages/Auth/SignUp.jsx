@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AuthServices from "../../Services/AuthServices";
 import toast from "react-hot-toast";
 import { Navigate, useNavigate } from "react-router-dom";
+import { getErrorMessage } from "../../utilis/ErrorMessage";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -34,8 +35,7 @@ const Navigate = useNavigate();
       Navigate("/login")
       console.log(res)
      }catch(err){
-      console.log(err)
-      toast.error("Issue in Registraion.")
+      toast.error(getErrorMessage(err))
 
      }
   };
